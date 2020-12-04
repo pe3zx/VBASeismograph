@@ -305,7 +305,7 @@ def _unzip_office_doc(filename):
     # Is this an Office 2007+ file?
     try:
         file_type = subprocess.check_output(["file", filename])
-        if (("2007+" not in file_type) or
+        if ((b"2007+" not in file_type) or
             ("Microsoft" not in file_type)):
             return filename            
     except Exception as e:
