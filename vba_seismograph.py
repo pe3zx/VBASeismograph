@@ -154,7 +154,7 @@ def _missing_ids(vba, pcode_ids, verbose=False):
     for curr_id in pcode_ids:
         if (curr_id not in vba):
             if (verbose):
-                print "P-code ID '" + str(curr_id) + "' is missing."
+                print("P-code ID '" + str(curr_id) + "' is missing.")
             num_missing += 1
     if (len(pcode_ids) == 0):
         return 0.0
@@ -202,7 +202,7 @@ def _missing_strs(vba, pcode_strs, verbose=False):
         if ((('"' + curr_str + '"') not in vba) and
             (("'" + curr_str + "'") not in vba)):
             if (verbose):
-                print "P-code string '" + str(curr_str) + "' is missing."
+                print("P-code string '" + str(curr_str) + "' is missing.")
             num_missing += 1
     if (len(pcode_strs) == 0):
         return 0.0
@@ -283,7 +283,7 @@ def _missing_comments(vba, pcode_comments, verbose=False):
         pat = tmp
         if (re.search(pat, vba, re.MULTILINE) is None):
             if (verbose):
-                print "P-code comment '" + str(curr_str) + "' is missing."
+                print("P-code comment '" + str(curr_str) + "' is missing.")
             num_missing += 1
     if (len(pcode_comments) == 0):
         return 0.0
@@ -392,8 +392,8 @@ def detect_stomping_via_pcode(filename, verbose=False, sensitivity="medium"):
         raise ValueError("Running pcodedmp.py on " + orig_filename + \
                          " failed. " + str(e))
     if (verbose):
-        print "----------------------------------------------"
-        print pcode
+        print("----------------------------------------------")
+        print(pcode)
     
     # Get the decompressed VBA source code.
     vba = None
@@ -405,9 +405,9 @@ def detect_stomping_via_pcode(filename, verbose=False, sensitivity="medium"):
     vba = vba.replace(chr(0x0d), "")
     vba = vba.replace("_\n", "\n")
     if (verbose):
-        print "----------------------------------------------"
-        print vba
-        print "----------------------------------------------"
+        print("----------------------------------------------")
+        print(vba)
+        print("----------------------------------------------")
 
     # Figure out the threshold of missing items to trigger VBA stomping.
     if (sensitivity == "low"):
@@ -450,11 +450,11 @@ def detect_stomping_via_pcode(filename, verbose=False, sensitivity="medium"):
 
     # Print more info if needed.
     if (verbose):
-        print "\n---------------------------------"
-        print "% Missing IDs:\t\t\t" + str(pct_missing_ids)
-        print "% Missing Strings:\t\t" + str(pct_missing_strs)
-        print "% Missing Comments:\t\t" + str(pct_missing_comments)
-        print "---------------------------------\n"
+        print("\n---------------------------------")
+        print("% Missing IDs:\t\t\t" + str(pct_missing_ids))
+        print("% Missing Strings:\t\t" + str(pct_missing_strs))
+        print("% Missing Comments:\t\t" + str(pct_missing_comments))
+        print("---------------------------------\n")
         
     # Return whether the VBA source code was stomped.
     return stomped
@@ -493,28 +493,28 @@ if __name__ == '__main__':
 
     # Check pcodedmp.py
     if ("PCODEDMP_DIR" not in os.environ):
-        print "ERROR: PCODEDMP_DIR environment variable not set. " + \
-            "This is the install directory for pcodedmp.py (https://github.com/bontchev/pcodedmp)."
+        print("ERROR: PCODEDMP_DIR environment variable not set. " + \
+            "This is the install directory for pcodedmp.py (https://github.com/bontchev/pcodedmp).")
         sys.exit(1)
     try:
         subprocess.check_output(["python",
                                  os.path.join(os.environ["PCODEDMP_DIR"], "pcodedmp.py"),
                                  "-h"])
     except Exception as e:
-        print "ERROR: It looks like pcodedmp is not installed. " + str(e) + "\n"
-        print "To install pcodedmp do the following:\n"
-        print "git clone https://github.com/bontchev/pcodedmp.git\n"
-        print "You will also need to set the PCODEDMP_DIR environment " + \
-            "variable to the pcodedmp install directory."
+        print("ERROR: It looks like pcodedmp is not installed. " + str(e) + "\n")
+        print("To install pcodedmp do the following:\n")
+        print("git clone https://github.com/bontchev/pcodedmp.git\n")
+        print("You will also need to set the PCODEDMP_DIR environment " + \
+            "variable to the pcodedmp install directory.")
         sys.exit(1)
 
     # Check olevba.
     try:
         subprocess.check_output(["olevba", "-h"])
     except Exception as e:
-        print "ERROR: It looks like olevba is not installed. " + str(e) + "\n"
-        print "To install olevba do the following:\n"
-        print "pip install oletools"
+        print("ERROR: It looks like olevba is not installed. " + str(e) + "\n")
+        print("To install olevba do the following:\n")
+        print("pip install oletools")
         sys.exit(1)
 
     # Get the arguments.
@@ -534,11 +534,11 @@ if __name__ == '__main__':
     # Check for VBA stomping.
     try:
         if (is_vba_stomped(args.doc, args.verbose, args.sensitivity)):
-            print "WARNING: File " + args.doc + " is VBA stomped."
+            print("WARNING: File " + args.doc + " is VBA stomped.")
         else:
-            print "File " + args.doc + " is NOT VBA stomped."
+            print("File " + args.doc + " is NOT VBA stomped.")
         sys.exit(0)
     except ValueError as e:
-        print "ERROR: VBA stomping check of " + str(args.doc) + \
-            " failed. " + str(e)
+        print("ERROR: VBA stomping check of " + str(args.doc) + \
+            " failed. " + str(e))
         sys.exit(1)
